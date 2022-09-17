@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ErrorService } from 'src/app/services/error.service';
 import { AdminLoginModel } from '../models/admin-login-model';
 import { AdminTokenModel } from '../models/admin-token-model';
 
@@ -11,7 +13,7 @@ export class AuthService {
 
   adminTokenModel:AdminTokenModel=new AdminTokenModel();
 
-  constructor(@Inject('apiUrl')private apiUrl:string, private httpClient:HttpClient,private router:Router) { }
+  constructor(@Inject('apiUrl')private apiUrl:string, private httpClient:HttpClient,private toastr:ToastrService,private router:Router,private errorService:ErrorService) { }
   isAuthenticate(){
     if (localStorage.getItem("adminToken")) {
       return true;
@@ -24,8 +26,14 @@ export class AuthService {
       this.adminTokenModel=res.data;
       localStorage.setItem("adminToken",this.adminTokenModel.adminAccessToken);
       this.router.navigate(["/admin"]);
+      this.toastr.success("Giriş Başarılı!");
     },(err)=>{
-      
+      this.errorService.errorHandler(err);
     });
+  }
+  logout(){
+    localStorage.removeItem("adminToken");
+    this.router.navigate(["/admin-login"]);
+    this.toastr.info("Çıkış Başarılı!");
   }
 }
