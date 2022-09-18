@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptor } from './admin/login/interceptor/auth.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AuthInterceptor } from './admin/login/interceptor/auth.interceptor';
     AppRoutingModule,
     AdminModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     BrowserModule,
     ToastrModule.forRoot({closeButton:true,progressBar:true})
   ],

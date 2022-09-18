@@ -65,7 +65,7 @@ export class ProductsComponent implements OnInit {
       this.errorService.errorHandler(err);
     });
   }
-  update(){
+  updatexx(){
     this.productService.update(this.product).subscribe((res:any)=>{
       this.toastr.success(res.message);
       this.getList();
@@ -73,5 +73,16 @@ export class ProductsComponent implements OnInit {
     },(err)=>{
       this.errorService.errorHandler(err);
     });
+  }
+
+  update(){
+    this.productService.update(this.product).subscribe({
+      next: (res:any)=>{
+        this.toastr.success(res.message);
+      this.getList();
+      document.getElementById("updateModelCloseBtn").click();
+      },
+      error: this.errorService.errorHandler.bind(this)
+   });
   }
 }

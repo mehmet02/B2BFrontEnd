@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'priceListPipe'
+  name: 'priceListDetailPipe'
 })
-export class PriceListPipe implements PipeTransform {
+export class PriceListDetailPipe implements PipeTransform {
 
   transform(value: any[], filterText: string): any[] {
     if (filterText == "" || filterText == null) {
@@ -11,8 +11,8 @@ export class PriceListPipe implements PipeTransform {
     }
 
     return value.filter(p=> {
-      const name = p.name.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
-      return (name)
+      const productName = p.productName.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
+      return (productName)
     });
   }
 

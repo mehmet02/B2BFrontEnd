@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorService } from 'src/app/services/error.service';
 import { HelperService } from 'src/app/services/helper.service';
+import { ProductModel } from '../products/model/product-model';
 import { PriceListModel } from './model/price-list-model';
 import { PriceListService } from './service/price-list.service';
 

@@ -5,11 +5,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { PriceListPipe } from './pipe/price-list.pipe';
 import { FormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { PriceListDetailModule } from './price-list-detail/price-list-detail.module';
 
-const routes:Routes=[
+const routes: Routes=[
   {
-    path:'',
-    component:PriceListsComponent
+    path: '',
+    component: PriceListsComponent
   }
 ]
 
@@ -22,10 +23,12 @@ const routes:Routes=[
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module,
+    PriceListDetailModule
   ],
-  exports:[
-    PriceListsComponent
+  exports: [
+    PriceListsComponent,
+    PriceListDetailModule
   ]
 })
 export class PriceListsModule { }

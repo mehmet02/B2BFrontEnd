@@ -4,6 +4,7 @@ import { HomeComponent } from './admin/home/home.component';
 import { LayoutsComponent } from './admin/layouts/layouts.component';
 import { AuthGuard } from './admin/login/guard/auth.guard';
 import { LoginComponent } from './admin/login/login.component';
+import { PriceListDetailComponent } from './admin/price-lists/price-list-detail/price-list-detail.component';
 import { PriceListsComponent } from './admin/price-lists/price-lists.component';
 import { ProductImagesComponent } from './admin/products/product-images/product-images.component';
 import { ProductsComponent } from './admin/products/products.component';
@@ -48,6 +49,11 @@ const routes: Routes = [
             path:'',
             component:PriceListsComponent,
             loadChildren:()=>import('./admin/price-lists/price-lists.module').then(m=>m.PriceListsModule)
+          },
+          {
+            path:':id',
+            component:PriceListDetailComponent,
+            loadChildren:()=>import('./admin/price-lists/price-list-detail/price-list-detail.module').then(m=>m.PriceListDetailModule)
           }
         ]
       }
