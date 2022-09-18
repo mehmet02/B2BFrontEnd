@@ -17,6 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "sweetalert2"
+           ],
             "outputPath": "dist/b2-bfront-end",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -31,7 +34,9 @@
               "src/styles.scss",
               "node_modules/ngx-toastr/toastr.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+            ]
           },
           "configurations": {
             "production": {

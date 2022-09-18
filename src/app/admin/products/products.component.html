@@ -29,7 +29,14 @@
       </div>
 
       <div class="card-body">
-        <div class="form-group offset-9">
+        <div class="row">
+          <div class="col-md-6">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productAddModal">Ürün Ekle</button>
+            <button class="btn btn-info mx-2" (click)="exportExcel()">Excel'e Aktar</button>
+
+          </div>
+          <div class="col-md-6">
+            <div class="form-group offset-9">
           <div class="input-group" data-widget="sidebar-search">
             <input
             class="form-control"
@@ -40,11 +47,14 @@
             aria-label="Search">
           </div>
         </div>
+          </div>
+        </div>
+
       </div>
 
 
       <div class="card-body">
-        <table class="table table-hovered">
+        <table class="table table-hovered" id="excel-table">
           <thead>
             <tr>
               <th>#</th>
@@ -56,11 +66,14 @@
           <tbody>
             <tr *ngFor="let product of products |productPipe:filterText let index=index">
               <td [innerText]="index+1"></td>
-              <td [innerText]="product.name"></td>
-              <td>
-                <img [src]="product.mainImage==null?'../../../assets/img/resim-yok.jpg':product.mainImage" alt="">
+              <td >
+                <a [innerText]="product.name" routerLink="/admin/products/{{product.id}}/images" class="btn btn-default"></a>
               </td>
               <td>
+                <img [src]="product.mainImageUrl==''?'./assets/img/resim-yok.jpg':'./assets/img/'+product.mainImageUrl" alt="">
+              </td>
+              <td>
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#productUpdateModal" (click)="getProduct(product)">Güncelle</button>
                 <button class="btn btn-danger" [swal]="deleteSwal" (confirm)="delete(product)">Sil</button>
               </td>
             </tr>
@@ -74,4 +87,59 @@
   </section>
 </div>
 
-<swal #deleteSwal title="Sil" text="Ürünü Silmek İstediğinize Eminmisiniz?" type="question" [showCancelButton]="true" [focusCancel]="true" [swalOptions]="{confirmButtonText:'Sil',cancelButtonText:'Vazgeç'}"></swal>
+<div class="modal fade" id="productAddModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ürün Ekle</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #addForm="ngForm">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Ürün Adı</label>
+          <input type="text" class="form-control" ngModel name="productName" #productName required minlength="3" placeholder="Ürün Adı">
+        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" [disabled]="!addForm.valid" (click)="add(addForm)">Kaydet</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="productUpdateModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ürün Güncelle</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form #updateForm="ngForm">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Ürün Adı</label>
+          <input type="text" class="form-control" [(ngModel)]="product.name" [ngModelOptions]="{standalone:true}" name="productName" #productName required minlength="3" placeholder="Ürün Adı">
+        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" [disabled]="!updateForm.valid" (click)="update()">Güncelle</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="updateModelCloseBtn">Kapat</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<swal #deleteSwal
+title="Sil"
+text="Ürünü Silmek İstediğinize Eminmisiniz?"
+type="question"
+[showCancelButton]="true" [focusCancel]="true"
+[swalOptions]="{confirmButtonText:'Sil',cancelButtonText:'Vazgeç'}">
+</swal>
